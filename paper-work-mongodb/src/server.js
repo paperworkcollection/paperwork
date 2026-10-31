@@ -314,7 +314,9 @@ app.use((err, _req, res, _next) => {
   console.error(err);
   res.status(500).json({ error: "Internal server error" });
 });
-
+app.get("/", (req, res) => {
+  res.sendFile(path.resolve("./public/index.html"));
+});
 const server = app.listen(port, () => console.log(`Paper Work API running at http://localhost:${port}`));
 async function shutdown() {
   server.close();
