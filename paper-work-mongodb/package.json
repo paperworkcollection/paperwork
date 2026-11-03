@@ -1,8 +1,8 @@
 {
   "name": "paper-work-mongodb",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
-  "description": "Paper Work store records and document management API using MongoDB Atlas",
+  "description": "Paper Work daily shift report and monthly store workbook manager",
   "type": "module",
   "scripts": {
     "dev": "nodemon src/server.js",
@@ -19,11 +19,16 @@
     "express": "5.1.0",
     "helmet": "8.1.0",
     "jsonwebtoken": "9.0.2",
-    "multer": "2.0.2",
+    "multer": "^2.5.0",
     "xlsx": "0.18.5"
   },
   "devDependencies": {
-    "nodemon": "3.1.10",
+    "nodemon": "^1.0.2",
     "prisma": "6.16.2"
+  },
+  "allowScripts": {
+    "@prisma/client@6.16.2": true,
+    "@prisma/engines@6.16.2": true,
+    "prisma@6.16.2": true
   }
 }

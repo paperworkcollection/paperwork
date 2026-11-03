@@ -129,3 +129,22 @@ model AuditLog {
   @@index([entityType, entityId])
   @@index([createdAt])
 }
+
+
+model MonthlySlipEntry {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  storeId     String   @db.ObjectId
+  year        Int
+  month       Int
+  reportDate  String?
+  fileName    String?
+  slipDetails String?
+  amount      Float?
+  currency    String   @default("USD")
+  notes       String?
+  enteredBy   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([storeId, year, month])
+}
