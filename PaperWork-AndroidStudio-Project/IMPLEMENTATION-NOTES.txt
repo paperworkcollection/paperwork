@@ -1,0 +1,33 @@
+PAPER WORK — UPDATED MONTHLY WORKBOOK FLOW
+
+Changes in this update
+- Super Admin store detail page has a year selector. It defaults to the device's current calendar year and offers a rolling range of years.
+- January–December month tiles open an in-app editable workbook editor.
+- Workbook rows are based on uploaded document records for that store and month.
+- Admin-entered slip details, amount, currency, notes, and entered-by are stored in MongoDB in the new MonthlySlipEntry collection.
+- Saving attempts to create/update the matching XLSX workbook in the connected Google Drive. If Drive is not connected/configured, entries are still saved in Paper Work and the UI clearly reports that Drive sync is pending.
+- Existing users, stores, documents, approval logs, and audit logs are not deleted by these source changes.
+
+Important deployment steps
+1. Replace the existing project source with this project folder, keeping your private backend/.env file separately. Do NOT upload .env to GitHub.
+2. In backend, run:
+   npm install
+   npx prisma generate
+3. Review the MongoDB schema change, then run:
+   npx prisma db push
+   This adds the MonthlySlipEntry collection/model. It is not a reset command. Do not use --force-reset and do not drop existing collections.
+4. Deploy the backend and public folder together.
+5. Ensure the backend environment contains the existing MongoDB DATABASE_URL (database name Paperwork), JWT_SECRET, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REDIRECT_URI, and optionally GOOGLE_DRIVE_FOLDER_ID.
+6. In the deployed app, sign in as Super Admin, connect Google Drive, open a store, choose a year, open a month, edit rows, and save.
+
+Workbook editing behaviour
+- The in-app editor is the source of truth for slip-entry fields.
+- Each row is associated with its uploaded file name, store, year, and month.
+- Saving writes the entries to MongoDB first, then attempts to synchronize the generated Excel workbook to Google Drive.
+- The separate Read Me and Slip Entries sheets are generated in the XLSX.
+- Google Drive must be connected with the OAuth account that owns the destination Drive folder.
+
+Safety
+- This update does not migrate or delete old approval records.
+- Do not run prisma db push until you have reviewed the schema and deployment target.
+- Do not share .env, OAuth client secret, JWT secret, or MongoDB credentials.
